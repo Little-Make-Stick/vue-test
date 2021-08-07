@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .star_on {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: url("./image/star_full.png") center center no-repeat;
+            background-size:32px 32px;
+        }
+        .star_half {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: url("./image/star_half.png") center center no-repeat;
+            background-size:32px 32px;
+        }
+        .star_off {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: url("./image/star_empty.png") center center no-repeat;
+            background-size:32px 32px;
+        }
+    </style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+    <span v-for="(star,index) in score" :key="index" :class="star"></span>
+</div>
+
+<script>
+   new Vue({
+       el: '#app',
+       data: {
+           score: ['star_on','star_on','star_on','star_half','star_off']
+       }
+   })
+</script>
+
+</body>
+</html>

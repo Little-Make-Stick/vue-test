@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <h3>{{str}}</h3>
+    <input @input="changeStr($event)" :value="str">
+    <p>
+        上面的代码可以被vue所简写,v-model
+    </p>
+    <input v-model="str">
+
+    <textarea v-model="str"></textarea>
+</div>
+<pre>
+    我们称将data数据绑定到表单元素,表单元素的修改又可以反向修改data属性的情况被称为双向绑定
+</pre>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            str: 'hello world'
+        },
+        methods: {
+            changeStr(event){
+                console.log('正在输入',event.target.value)
+                this.str = event.target.value
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <button v-on:click="sayHello">say hello</button>
+    <button @click="sayHello">say hello</button>
+    <p>
+        @click支持函数传参的
+    </p>
+    <button @dblclick="showNumber(777)">777</button>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            name: '小明'
+        },
+        //注意:data是vue中存放属性的地方,vue的方法不能存放于data中,方法需要存放在methods中
+        methods: {
+            sayHello() {
+                // TODO:注意在vue实例中访问属性/方法都需要通过this关键字
+                console.log('你好我叫', this.name)
+            },
+            showNumber(num) {
+                console.log(num)
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

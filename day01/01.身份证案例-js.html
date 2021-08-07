@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #card {
+            width: 360px;
+            padding: 20px;
+            border: 1px solid #666;
+        }
+
+        #card img {
+            width: 80px;
+            height: 120px;
+        }
+
+        #card .msg {
+            display: inline-block;
+            float: right;
+            height: 120px;
+            width: 270px;
+        }
+
+        #card .msg div {
+            margin-bottom: 30px;
+        }
+
+        #card .address {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!--
+  div是块级元素(自身占一行)
+  span是行内元素()
+-->
+<div id="card">
+    <img id="avatar" src="./image/avatar.jpg" alt="头像">
+    <div class="msg">
+        <div>姓名:陌生人</div>
+        <div>性别:男</div>
+        <div>年龄:21</div>
+    </div>
+    <div class="address">
+        地址:xx省xx市xx区xx路xx号
+    </div>
+</div>
+
+<script>
+    // TODO:将上方身份证安利与js配合使用,使得上方的ui根据js的变化而变化
+    var name = '小芳'
+    var age = 21
+    var sex = '女'
+    var address = '广东省广州市天河区xx路36号'
+
+    var imageUrl = './image/1.jpg'
+
+    //通过js的DOM操作访问 类名为address的div元素
+    // 驼峰命名法变量名写法(首个单词全部小写,其后面的所有单词首字母大写)
+    var addressElement = document.getElementsByClassName('address')[0]
+
+    console.log(addressElement)
+    // +号除了可以用来做数字的加法运算意外,还支持字符串拼接
+    addressElement.innerHTML = '地址:' + address
+
+
+    var msgElement = document.getElementsByClassName('msg')[0]
+    var nameElement = msgElement.getElementsByTagName('div')[0]
+    var sexElement = msgElement.getElementsByTagName('div')[1]
+    var ageElement = msgElement.getElementsByTagName('div')[2]
+    console.log(nameElement, sexElement, ageElement)
+    // innerHTML 设置/读取 对称标签内部的内容
+    nameElement.innerHTML = '姓名:' + name
+    sexElement.innerHTML = '性别:' + sex
+    ageElement.innerHTML = '年龄:' + age
+
+
+    var avatar = document.getElementById('avatar')
+    //setAttribute 修改元素的制定属性,参数一需要修改的指定属性名,参数二修改后的值
+    avatar.setAttribute('src', imageUrl)
+
+    /*
+        var a = 'hello'
+        var b = ' world'
+        console.log(a + b) //字符串拼接 => 'hello world'
+    */
+</script>
+
+</body>
+</html>

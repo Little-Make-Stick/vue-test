@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <p>
+        {{age >= 18 ? '成年':'未成年'}}
+    </p>
+
+    <div>
+        {{age >= 18 ? '成年':'未成年'}}
+    </div>
+    // 计算属性的使用与普通属性相同,直接在文本差值或属性差值中调用该计算属性名就好了
+    <h3>{{isAdult}}</h3>
+
+
+    <h3>人民币转美金/日元</h3>
+    <!--TODO:注意在vue中,即使input是number类型但是他绑定的value值数据类型为字符串-->
+    人民币<input v-model="rmb" type="number">
+
+    <label><input type="radio" value="usd" name="money" v-model="rang">美元</label>
+    <label><input type="radio" value="jpy" name="money" v-model="rang">日元</label>
+
+    <span style="font-weight: bold;font-size: 18px">
+        {{rateMoney}}
+    </span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            age: 22,
+            rmb: 0,
+            rang: 'usd'
+        },
+        // 计算属性,计算属性本质上是一个带返回值的函数
+        // 在开发过程中我们经常需要对当前vue的属性进行逻辑运算后才展示在页面上
+        // 并且大括号内文本差值不允许写if语句switch语句和循环语句
+        computed: {
+
+            isAdult() {
+                //可以在这段函数内进行各种计算,最后将计算后的值return出去就好了
+                var result = '成年'
+                if (this.age < 18) {
+                    result = '未成年'
+                }
+                return result
+            },
+
+            rateMoney() {
+                var rate = 6.8
+                if (this.rang == 'jpy') {
+                    rate = 0.063
+                }
+                // this.rmb是字符串
+                return parseInt(this.rmb / rate * 100)/100 //取小数点后两位
+
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

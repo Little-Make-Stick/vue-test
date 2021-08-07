@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #card {
+            width: 360px;
+            padding: 20px;
+            border: 1px solid #666;
+        }
+
+        #card img {
+            width: 80px;
+            height: 120px;
+        }
+
+        #card .msg {
+            display: inline-block;
+            float: right;
+            height: 120px;
+            width: 270px;
+        }
+
+        #card .msg div {
+            margin-bottom: 30px;
+        }
+
+        #card .address {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!--
+TODO: 注意使用vue时必须先安装/引用vue三方库,
+    当vue的三方库被引用成功时,vue将会给我们提供一个全局对象Vue进行开发
+-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<!--
+  div是块级元素(自身占一行)
+  span是行内元素()
+-->
+双大括号文本差值,将vue实例中的属性插入到元素文本内容区的方法,通过双大括号语法{{属性名}}
+<pre>
+    注意属性差值与文本差值不同,属性差值需要一个v-bind:指令绑定需要被属性差值的属性
+    例子:
+       v-bind:属性名="data中的属性"
+       注意!v-bind:可以缩写为一个冒号:
+       上面的代码等价于 :属性名="data中的属性"
+</pre>
+<div id="card">
+    <img id="avatar" :src="imageURl" alt="头像">
+    <div class="msg">
+        <div>姓名:{{name}}</div>
+        <div>性别:{{sex}}</div>
+        <div>年龄:{{age}}</div>
+    </div>
+    <div class="address">
+        地址:{{address}}
+    </div>
+</div>
+
+<script>
+    // TODO:将上方身份证安利与js配合使用,使得上方的ui根据js的变化而变化
+
+    // 通过Vue对象实例化以上代码
+    new Vue({
+        // vue接受一个对象参数,这个参数就是用来描述页面应该长什么样的配置元素
+        el: '#card', //通过id选择器将上方id为card元素实例化成一个vue的UI模板
+        data: {//data -> 属性是用于存放vue实例中数据的选项
+            name: '小白',
+            sex: '男',
+            age: 55,
+            address: '广东省广州市天河区xx路36号',
+            imageURl: './image/1.jpg'
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

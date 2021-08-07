@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #app {
+            border: 1px solid #ccc;
+            width: 240px;
+            padding: 10px;
+        }
+        #app .avatar {
+            width: 50px;
+            height: 80px;
+            float: left;
+        }
+        .disc {
+            font-size: 12px;
+            color: #666;
+        }
+        .discount {
+            border: 1px solid red;
+            color: red;
+            font-size: 14px;
+            display: inline-block;
+            padding: 0 4px;
+        }
+    </style>
+</head>
+<body>
+<!--第一步 引入Vue-->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+    <img class="avatar" :src="seller.avatar">
+    <h3>{{seller.name}}</h3>
+    <div class="disc">起送 ￥{{seller.minPrice}} {{seller.desc}} 人均消费 ￥{{seller.averagePrice}}</div>
+    <span v-for="item in seller.discount" class="discount" :key="item">{{item}}</span>
+</div>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        data: {
+            seller: {
+                avatar: './image/1.jpg',
+                name: '薯堡堡(番职店)',
+                minPrice: 10,
+                desc: '免费配送',
+                averagePrice: 13,
+                discount: ['满20减10','满46减30','满99减100']
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

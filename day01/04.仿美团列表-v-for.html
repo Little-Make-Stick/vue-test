@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background: #666666;
+        }
+
+        #app {
+            border: 1px solid #ccc;
+            width: 375px;
+            margin: 10px auto;
+            background: #a1a1a1;
+        }
+
+        .goods-item {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .goods-item .item-left {
+            display: inline-block;
+            width: 84px;
+            height: 63px;
+        }
+
+        .goods-item .item-right {
+            display: inline-block;
+        }
+
+        .item-right .name {
+            font-weight: bold;
+        }
+
+        .item-right .desc {
+            font-size: 12px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .item-right .discount {
+            display: inline-block;
+            border: 1px solid red;
+            color: red;
+            font-size: 12px;
+            margin: 5px 5px 5px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div v-for="(seller,index) in sellers" :key="index" class="goods-item">
+        <div class="item-left">
+            <img width="100%" height="100%" :src="seller.avatar" class="avatar">
+        </div>
+        <div class="item-right">
+            <div class="name">{{seller.name}}</div>
+            <div class="desc">
+                起送 ￥{{seller.minPrice}} {{seller.desc}} 人均 ￥{{seller.averagePrice}}
+            </div>
+            <div>
+                <span class="discount" v-for="dis in seller.discount" :key="dis">{{dis}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            sellers: [
+                {
+                    avatar: './image/1.jpg',
+                    name: '薯堡堡(番职店)',
+                    minPrice: 10,
+                    desc: '免费配送',
+                    averagePrice: 13,
+                    discount: ['满20减10', '满46减30', '满99减100']
+                },
+                {
+                    avatar: 'http://p0.meituan.net/waimaipoi/5d51909602fe5db6365953b26ecb31b616384.jpg@168w_126h_1e_1c',
+                    name: '沙湾古镇贡茶',
+                    minPrice: 30,
+                    desc: '配送 ￥15',
+                    averagePrice: 13,
+                    discount: ['满20减2', '满40减4', '满60减6']
+                },
+                {
+                    avatar: 'http://p1.meituan.net/waimaipoi/3ea9d378b4e3193e8fb102a858dbf225188574.png@168w_126h_1e_1c',
+                    name: '西尊披萨',
+                    minPrice: 50,
+                    desc: '配送 ￥10',
+                    averagePrice: 13,
+                    discount: ['满15减6', '满29减10', '满49减20']
+                },
+                {
+                    avatar: 'http://p0.meituan.net/waimaipoi/9e4f7f1b1f9073c07c14a5a4d34c8e0473095.jpg@168w_126h_1e_1c',
+                    name: '肥佬烧烤',
+                    minPrice: 80,
+                    desc: '配送 ￥25',
+                    averagePrice: 13,
+                    discount: ['满32减12', '满45减18', '满75减23']
+                },
+                {
+                    avatar: ' http://p1.meituan.net/waimaipoi/dfe52caa8003bf5268b9c5aa81775b6b31969.jpg@168w_126h_1e_1c',
+                    name: '堕落小龙虾',
+                    minPrice: 199,
+                    desc: '配送 ￥19.9',
+                    averagePrice: 13,
+                    discount: ['满159减10', '满199减15', '满249减20']
+                }
+
+
+            ]
+        }
+    })
+</script>
+
+</body>
+</html>

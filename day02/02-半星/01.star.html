@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .on {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: url("./image/star_full.png") no-repeat center center;
+        }
+
+        .off {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: url("./image/star_empty.png") no-repeat center center;
+        }
+
+        .half {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background: url("./image/star_half.png") no-repeat center center;
+        }
+
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <span v-for="(star,index) in stars"
+          :class="star"
+          @click="checkedStar(index,$event)">
+    </span>
+    <p>
+        鼠标移动评星
+    </p>
+    <span v-for="(star,index) in overStars"
+          :class="star"
+          @mouseover="mouseOverStar(index,$event)">
+    </span>
+
+</div>
+
+<script>
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            stars: ['off', 'off', 'off', 'off', 'off'],
+            overStars: ['off', 'off', 'off', 'off', 'off'],
+        },
+        methods: {
+            checkedStar(index, evt) {
+                console.log(evt.offsetX)
+                0
+                    ['on', 'off', 'off', 'off', 'off']
+                1
+                    ['on', 'on', 'off', 'off', 'off']
+                2
+                    ['on', 'on', 'on', 'off', 'off']
+                // 循环根据指定下表生成一个,对应评分的数组
+                var arr = []
+                for (var i = 0; i < 5; i++) {
+                    if (i < index) {
+                        arr.push('on')
+                    }
+                    else if (i == index) {
+                       if(evt.offsetX < 16){
+                           // 这里应该是半星,一个星星的宽度是32
+                           arr.push('half')
+                       }else {
+                           arr.push('on')
+                       }
+
+                    } else {
+                        arr.push('off')
+                    }
+                }
+                // 将计算生成的评分数组赋值给stars
+                this.stars = arr
+            },
+            mouseOverStar(index, evt) {
+                var arr = []
+                for (var i = 0; i < 5; i++) {
+                    if (i < index) {
+                        arr.push('on')
+                    }
+                    else if (i == index) {
+                        if(evt.offsetX < 16){
+                            // 这里应该是半星,一个星星的宽度是32
+                            arr.push('half')
+                        }else {
+                            arr.push('on')
+                        }
+
+                    } else {
+                        arr.push('off')
+                    }
+                }
+                // 将计算生成的评分数组赋值给stars
+                this.overStars = arr
+            }
+        }
+    })
+
+</script>
+
+</body>
+</html>

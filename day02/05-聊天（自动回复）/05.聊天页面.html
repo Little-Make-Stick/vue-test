@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #app {
+            padding: 10px;
+            background: #00a2e8;
+            border: 2px solid #000;
+            border-radius: 8px;
+            width: 375px;
+            margin: 10px auto;
+        }
+
+        .container {
+            margin-bottom: 8px;
+            background: #fff;
+            width: 100%;
+            height: 500px;
+            border-radius: 8px;
+            overflow: auto;
+        }
+
+        .context {
+            border-radius: 8px;
+            width: 300px;
+            height: 60px;
+            vertical-align: top;
+        }
+
+        .send {
+            margin-left: 4px;
+            margin-top: 4px;
+            border-radius: 8px;
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+        }
+
+        .msg {
+            text-align: right;
+            padding: 5px;
+            font-size: 0;
+        }
+
+        .msg.other {
+            text-align: left;
+            position: relative;
+        }
+
+        .other .bubble {
+            background: #aeaeae;
+            margin-left: 10px;
+        }
+
+        .other .tail {
+            position: absolute;
+            left: 5px;
+            top: 12px;
+            border: 10px solid #aeaeae;
+            border-left: 0;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+        }
+
+        .bubble {
+            font-size: 14px;
+            display: inline-block;
+            text-align: left;
+            background: #3fb55e;
+            max-width: 180px;
+            line-height: 20px;
+            padding: 10px 5px 10px 10px;
+            border-radius: 8px;
+            word-wrap: break-word;
+        }
+
+        .tail {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border: 10px solid #3fb55e;
+            border-right: 0;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <div  :class="msg.self? 'msg': 'msg other'" v-for="(msg,index) in msgs" :key="index">
+            <div class="bubble">
+                {{msg.text}}
+            </div>
+            <div class="tail"></div>
+        </div>
+    </div>
+    <div class="edit-wrapper">
+        <textarea v-model="text" class="context"></textarea>
+        <button class="send" @click="sendMsg">发送</button>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            text: '',
+            msgs: [
+                {text: '在吗?', self: true},
+                {text: '在?', self: true},
+            ]
+        },
+        methods: {
+            sendMsg() {
+
+                this.msgs.push({text: this.text, self: true})
+                // 清空文本内容
+                this.text = ''
+                // 模拟自动回复
+                setTimeout(() => {
+                    this.msgs.push({text: '你说的我知道了', self: false})
+                }, 800)
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

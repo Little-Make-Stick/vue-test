@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #app {
+            position: relative;
+            box-sizing: border-box;
+            padding: 10px;
+            margin: 0 auto;
+            width: 375px;
+            height: 667px;
+            overflow: auto;
+            /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#0088e2+0,00edf9+100 */
+            background: #0088e2; /* Old browsers */
+            background: -moz-linear-gradient(top, #0088e2 0%, #00edf9 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #0088e2 0%, #00edf9 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #0088e2 0%, #00edf9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088e2', endColorstr='#00edf9', GradientType=0); /* IE6-9 */
+
+        }
+
+        /*
+         专门辅助开发者做背景渐变的网站
+         https://www.colorzilla.com/gradient-editor/
+         */
+        .header {
+            border-bottom: 1px solid #fff;
+        }
+
+        .header .title {
+            color: #fff;
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .header .input {
+            background: transparent;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            height: 44px;
+            width: 320px;
+            line-height: 44px;
+            border: none;
+            outline: none;
+        }
+
+        .header .input::placeholder {
+            color: #e9e9e9;
+            font-weight: normal;
+        }
+
+        .header .edit {
+            font-size: 14px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .list {
+            padding: 10px 0;
+            height: 497px;
+            overflow: auto;
+        }
+
+        .placeholder {
+            text-align: center;
+            color: #fff;
+            box-sizing: border-box;
+            padding: 100px 0;
+        }
+
+        .list .list-item {
+            position: relative;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            padding: 0 10px;
+            width: 100%;
+            height: 44px;
+            border-radius: 5px;
+            background: #fff;
+            line-height: 44px;
+        }
+
+        .list-item .icon {
+            font-size: 12px;
+            color: #666;
+            position: absolute;
+            right: 10px;
+            top: 13px;
+            display: none;
+            cursor: pointer;
+            padding: 3px;
+            border-radius: 50%;
+        }
+
+        .list-item:hover .icon {
+            display: inline-block;
+        }
+
+        .list-item:hover .icon:hover {
+            background: #ccc;
+
+        }
+
+        .list-item .text {
+            display: inline-block;
+            width: 280px;
+            color: #666;
+            font-size: 14px;
+            vertical-align: top;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .list-item .completed {
+            text-decoration: line-through;;
+        }
+
+        .footer {
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            bottom: 20px;
+            border-bottom: 1px solid #fff;
+            color: #fff;
+            line-height: 40px;
+            font-size: 14px;
+        }
+
+        .footer .btn {
+            cursor: pointer;
+        }
+
+        .footer .active {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+    </style>
+    <link rel="stylesheet" href="icon.css" type="text/css">
+</head>
+<body>
+
+<div id="app">
+    <div class="header">
+        <h3 class="title"> TODO LIST</h3>
+        <input placeholder="请添加你的日程" v-model="value" type="text" class="input">
+        <span class="edit" @click="addTodo">Edit</span>
+    </div>
+    <div class="list placeholder" v-if="todos.length < 1">
+        <p>你当前还未添加任何日程</p>
+        <p>快来添加日程吧!</p>
+    </div>
+    <div v-else class="list">
+
+        <div class="list-item" v-for="todo in filterTodos" :key="todo.id">
+            <input type="checkbox" v-model="todo.completed">
+            <span class="text"
+                  :class="todo.completed ? 'completed': ''">{{todo.text}}</span>
+            <span class="icon-cross icon" @click="removeTodo(todo.id)"></span>
+        </div>
+
+    </div>
+    <div class="footer">
+        <span class="btn"
+              @click="switchBtn('ALL')"
+              :class="show === 'ALL'? 'active': ''">All</span>
+        <span class="btn"
+              @click="switchBtn('ACTIVE')"
+              :class="show === 'ACTIVE'? 'active': ''">Active</span>
+        <span class="btn"
+              @click="switchBtn('COMPLETED')"
+              :class="show === 'COMPLETED'? 'active': ''">Completed</span>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            value: '',
+            show: 'ALL',
+            todos: [
+                // {text: '啊啊啊啊', completed: false}
+            ]
+        },
+        computed: {
+            filterTodos() {
+                if (this.show === 'ACTIVE') {
+                    // filter是Array的API,遍历数组内每一项并反悔return为true的元素
+                    return this.todos.filter(function (item) {
+                        return !item.completed
+                    })
+                }
+                if (this.show === 'COMPLETED') {
+                    return this.todos.filter(function (item) {
+                        return item.completed
+                    })
+                }
+
+                return this.todos
+            }
+        },
+        methods: {
+            addTodo() {
+                // let 是ES6语法，局部作用域变量，当代码执行超出当前作用于时，改变量将会被回收
+                //通过时间戳来做为id,给每一个日程添加一个唯一标识符,保证删除不会出错
+                // 因为每一个日程的创建时间都不会相同,所以可以通过时间戳保证每个日程的id都不会相同
+                console.log(new Date().getTime()) // 1561607315545 时间戳相对于格林威治1970年1月1日0点过去多少毫秒
+
+                let todo = {text: this.value, completed: false, id: new Date().getTime()}
+                this.todos.push(todo)
+                // 清空输入框
+                this.value = ''
+            },
+            switchBtn(show) {
+                this.show = show
+            },
+            removeTodo(id) {
+                // 根据id值(每个日程都不同)
+                for(var i = 0;i < this.todos.length; i++) {
+                    if(this.todos[i].id == id) {
+                        // 通过日程的id找到了需要删除的对应日程
+                        this.todos.splice(i, 1)
+                        break // 已经找到了需要删除的日程,则无需再向后遍历了
+                        // break就是跳出本次循环
+                    }
+                }
+
+            }
+
+        }
+    })
+
+    // localstorage 数据持久化
+
+</script>
+</body>
+</html>

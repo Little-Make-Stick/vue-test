@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .menu {
+            background: #ccc;
+            width: 90px;
+
+        }
+
+        .menu li {
+            position: relative;
+            width: 100%;
+            padding: 10px 5px;
+        }
+
+        .menu li ul {
+            position: absolute;
+            left: 90px;
+            top: 0;
+            width: 90px;
+            background: #CCC;
+            border-left: 1px solid #333;
+            display: none; /*隐藏二级列表*/
+        }
+
+        .menu li:hover {
+            color: red;
+        }
+
+        .menu li:hover ul {
+            display: block;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<ul class="menu">
+    <li>
+        家用电器
+        <ul>
+            <li>电视</li>
+            <li>空调</li>
+            <li>洗衣机</li>
+            <li>冰箱</li>
+        </ul>
+    </li>
+    <li>
+        手机
+        <ul>
+            <li>手机通讯</li>
+            <li>运营商</li>
+            <li>手机配件</li>
+            <li>摄影摄像</li>
+            <li>数码配件</li>
+        </ul>
+    </li>
+    <li>电脑</li>
+    <li>家居</li>
+    <li>男装</li>
+    <li>美妆</li>
+    <li>女鞋</li>
+    <li>男鞋</li>
+    <li>房产</li>
+</ul>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+<div id="app">
+    <pre>
+        vue专门提供了一个指令,v-for列表渲染指令,注意使用v-for循环渲染的元素一定要添加key属性,key的属性值在循环渲染的兄弟之前必须唯一
+        v-for="(item,index)  in 需要遍历的数据(数组)  "
+        item 是循环遍历出来的每一项
+        index 是当前项的下标
+    </pre>
+
+
+    <ul>
+        <li v-for="(item,index) in menuList" :key="item">{{index}}-{{item}}</li>
+    </ul>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            menuList: [
+                '家用电器',
+                '手机',
+                '电脑',
+                '家居',
+                '男装',
+                '美妆',
+                '女鞋',
+                '男鞋',
+                '房产'
+            ]
+        }
+    })
+</script>
+
+<ul id="exp" class="menu">
+    <li v-for="(item,index) in list" :key="index">
+        {{item.title}}
+        <ul>
+            <li v-for="name in item.subList" :key="name">{{name}}</li>
+        </ul>
+    </li>
+</ul>
+
+<script>
+    new Vue({
+        el: '#exp',
+        data: {
+            list: [
+                {title: '家用电器', subList: ['电视', '空调', '洗衣机', '冰箱']},
+                {title: '手机', subList: ['苹果', '华为', 'sony', '三星']},
+                {title: '电脑', subList: ['戴尔', '外星人', '联想', 'razer']},
+                {title: '家居', subList: ['格力', '美的', '苏宁易购', '三和']},
+            ]
+        }
+    })
+</script>
+
+</body>
+</html>
